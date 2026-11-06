@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles/game.css" />
+  <link rel="stylesheet" href="../styles/sketchy-theme.css" />
+  <link rel="icon" href="../img/game/icon.png" type="image/png">
+  <title>Draw.it</title>
+</head>
+
+<body>
+  <div class="row">
+
+    <div class="column columnLeft">
+      <div class="header sketchy-header">
+        <h3 id="roomCodeHeader"></h3>
+      </div>
+      <div id="playerList" class="sketchy-container">
+        <h3 id="playersHeader">Players</h3>
+        <div id="players"></div>
+        <div class="game-info">
+          <p id="gameMode" class="game-mode-display"></p>
+          <p id="roundInfo" class="round-info"></p>
+          <p id="copycatInfo" class="copycat-info"></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="game-info">
+      <p id="gameMode" class="game-mode-display"></p>
+      <p id="roundInfo" class="round-info"></p>
+      <p id="copycatInfo" class="copycat-info"></p>
+      <div id="referenceContainer" class="reference-drawing-container" style="display: none;">
+        <div class="reference-drawing-label">Memorize This Drawing</div>
+        <canvas id="referenceCanvas" class="reference-drawing" width="300" height="225"></canvas>
+      </div>
+    </div>
+
+    <div class="column columnRight">
+      <div class="header sketchy-header">
+        <h1 id="gameHeader">Player is drawing</h1>
+      </div>
+      <div id="canvasDiv">
+        <div class="controls" id="controls">
+          <div class="tools-container">
+            <div class="tool-group">
+              <div class="color-picker">
+                <label for="pen-color">Color</label>
+                <input type="color" id="pen-color" value="#000000">
+              </div>
+              
+              <div class="color-palette">
+                <div class="color-swatch" data-color="#000000" style="background-color: #000000;"></div>
+                <div class="color-swatch" data-color="#ff0000" style="background-color: #ff0000;"></div>
+                <div class="color-swatch" data-color="#00ff00" style="background-color: #00ff00;"></div>
+                <div class="color-swatch" data-color="#0000ff" style="background-color: #0000ff;"></div>
+                <div class="color-swatch" data-color="#ffff00" style="background-color: #ffff00;"></div>
+                <div class="color-swatch" data-color="#ff00ff" style="background-color: #ff00ff;"></div>
+                <div class="color-swatch" data-color="#00ffff" style="background-color: #00ffff;"></div>
+                <div class="color-swatch" data-color="#ffffff" style="background-color: #ffffff;"></div>
+              </div>
+            </div>
+            
+            <div class="tool-group">
+              <button id="pencil-tool" class="tool-btn active" title="Pencil">✏️</button>
+              <button id="eraser-tool" class="tool-btn" title="Eraser">🧽</button>
+              <button id="bucket-tool" class="tool-btn" title="Fill">🪣</button>
+              <button id="dropper-tool" class="tool-btn" title="Color Picker">👁️</button>
+            </div>
+            
+            <div class="tool-group">
+              <button id="undo-btn" class="tool-btn" title="Undo">↩️</button>
+              <button id="redo-btn" class="tool-btn" title="Redo">↪️</button>
+              <button id="reset-canvas" class="tool-btn" title="Clear Canvas">🗑️</button>
+            </div>
+            
+            <div class="tool-group">
+              <label for="brush-size">Size:</label>
+              <input type="range" id="brush-size" min="1" max="50" value="2">
+              <span id="size-display">2px</span>
+            </div>
+          </div>
+        </div>
+        <canvas class="gameCanvas" id="gameCanvas" width="800" height="600"></canvas>
+        <div id="albumReviewContainer" class="album-review-container" style="display: none;">
+          <div class="album-header">
+            <h2>Drawing Gallery</h2>
+            <p id="albumDescription">Review all drawings from this round</p>
+          </div>
+          <div class="album-navigation">
+            <button id="prevDrawing" class="album-nav-btn">&lt; Previous</button>
+            <span id="drawingCounter">1/0</span>
+            <button id="nextDrawing" class="album-nav-btn">Next &gt;</button>
+          </div>
+          <div class="album-display">
+            <canvas id="albumCanvas" width="800" height="600"></canvas>
+            <div class="drawing-info">
+              <p id="drawerName">Artist: </p>
+              <div class="rating-container">
+                <p>Rate this drawing:</p>
+                <div class="star-rating">
+                  <span class="star" data-rating="1">★</span>
+                  <span class="star" data-rating="2">★</span>
+                  <span class="star" data-rating="3">★</span>
+                  <span class="star" data-rating="4">★</span>
+                  <span class="star" data-rating="5">★</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="album-actions">
+            <button id="continueFromAlbum" class="continue-btn">Continue to Next Round</button>
+          </div>
+        </div>
+        <div id="boxInputText">
+          <div style="width: 80%;">
+            <div id="boxChat"></div>
+            <div style="width: 50%;float:left">
+              <p style="display: none;" id="rightWord"></p>
+              <input type="text" name="word" id="wordIpt" placeholder="Guess!" />
+            </div>
+            <div style="width: 20%;float:left">
+              <button id="sendBtn">Send</button>
+            </div>
+          </div>
+          <div style="width: 10%;">
+            <span id="timer">2:00</span>
+          </div>
+          <div style="width: 10%;">
+            <img src="../img/game/clock.png" id="img-clock" data-animate="clock" style="width:40px">
+          </div>
+        </div>
+      </div>
+      <div class="footer"></div>
+    </div>
+
+  </div>
+
+  <script src="/scripts/socket.io.min.js"></script>
+  <script src="../models/Player.js"></script>
+  <script src="../js/game.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+{
+  "name": "roundrobindraw",
+  "version": "1.0.0",
+  "description": "roundrobindraw is a drawing app that allows users to create and share drawings in real-time. It uses WebSockets for real-time communication and Express.js for the server-side framework.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon --ext js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vininew921/draw.it.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vininew921/draw.it/issues"
+  },
+  "homepage": "https://github.com/vininew921/draw.it#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.25.2",
+    "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "connect-livereload": "^0.6.1",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "livereload": "^0.9.3",
+    "mongoose": "^8.14.1",
+    "socket.io": "^4.2.0"
+  }
+}

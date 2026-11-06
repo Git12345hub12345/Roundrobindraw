@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../styles/lobby.css">
+  <link rel="stylesheet" href="../styles/modal.css">
+  <link rel="stylesheet" href="../styles/sketchy-theme.css">
+  <link rel="icon" href="../img/game/icon.png" type="image/png">
+  <title>Draw.it</title>
+</head>
+
+<body>
+  <div class="row">
+    <div class="column columnLeft">
+      <div class="header sketchy-header">
+        <div class="room-code-container">
+          <h3 id="roomCodeHeader"></h3>
+          <button id="copyRoomCodeBtn" class="copy-btn" title="Copy Room Code">
+            Copy
+          </button>
+        </div>
+        <div id="copyNotification" class="copy-notification">
+          Room code copied!
+        </div>
+      </div>
+      <div id="playerList" class="sketchy-container">
+        <h3 id="playersHeader">Players</h3>
+        <div id="players">
+        </div>
+        <div class="game-mode-container">
+          <label for="gameModeSelector">Game Mode:</label>
+          <select id="gameModeSelector" class="game-mode-select">
+            <option value="guess">Guessing Mode</option>
+            <option value="copycat">Copycat Mode</option>
+          </select>
+        </div>
+        <button class="readyButton ready" id="lobbyReady">Ready</button>
+      </div>
+    </div>
+
+    <div class="column columnRight">
+      <div class="header sketchy-header">
+        <h1 id="lobbyHeader">Waiting Room</h1>
+      </div>
+      <div class="canvasDiv" id="canvasDiv">
+        <div class="controls">
+          <div class="color">
+            <label for="pen-color">Color</label>
+            <input type="color" id="pen-color" value="#000">
+          </div>
+          <div class="actions">
+            <button id="reset-canvas">Reset</button>
+          </div>
+        </div>
+        <canvas class="lobbyCanvas" id="lobbyCanvas" width="800" height="600">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <script src="/scripts/socket.io.min.js"></script>
+  <script src="../models/Player.js"></script>
+  <script src="../js/lobby.js"></script>
+
+</body>
+
+</html>
